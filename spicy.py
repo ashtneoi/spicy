@@ -61,13 +61,13 @@ class PIC16F1454(Device):
                     elif spec == 'q':
                         continue  # ??
                     elif spec == '-':
-                        val = 0
+                        bit = 0
                     elif spec == 'r':
                         raise Exception("eh?")
                     elif spec == '0':
-                        val = 0
+                        bit = 0
                     elif spec == '1':
-                        val = 1
+                        bit = 1
                     else:
                         raise Exception("eh?")
                     val = (val & (0xFF ^ (1 << n))) | (bit << n)
