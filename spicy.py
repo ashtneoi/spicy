@@ -1,11 +1,20 @@
 from random import randrange
 
+from utils import Constant
+
+
+MOVLW = Constant('MOVLW')
+XORWF = Constant('XORWF')
+BRA = Constant('BRA')
+
 
 class Device(object):
     pass
 
 
 class PIC16F1454(Device):
+    PCH = 0
+
     # POR/BOR, all other resets
     meminit = [None] * 0x1000
     meminit[0x000] = 'xxxx xxxx'
@@ -38,6 +47,8 @@ class PIC16F1454(Device):
         return d0
 
     def por(self):
+        self.PCH = 0
+
         for a, init in enumerate(self.meminit):
             if init is not None:
                 porbor = init[0:4] + init[5:9]
@@ -52,7 +63,7 @@ class PIC16F1454(Device):
                     elif spec == '-':
                         val = 0
                     elif spec == 'r':
-                        raise Exception("???")
+                        raise Exception("eh?")
                     elif spec == '0':
                         val = 0
                     elif spec == '1':
@@ -62,8 +73,25 @@ class PIC16F1454(Device):
                     val = (val & (0xFF ^ (1 << n))) | (bit << n)
                 self.datamem[a] = val
 
-    def exec(self, insn):
-        pass
+    def do(self, insn):
+        three = insn >> 11
+        rest = insn & ((1 << 11) - 1)
+        if three == 0b110:
+            if (rest >> 8) == 0b000:
+                op = MOVLW
+            elif (rest >> 9) == 0b01:
+                op = BRA
+            else:
+                raise Exception("eh?")
+        elif three == 0b000:
+            if (rest >> 8) == 0b110:
+                op = XORWF
+            else:
+                raise Exception("eh?")
+        else:
+            raise Exception("eh?")
+
+        print(op)
 
 
 class Emulator(object):
@@ -73,3 +101,10 @@ class Emulator(object):
 
     def run(self):
         self.device.por()
+
+        while True:
+            a = (self.device.PCH << 8) | self.device.rw(0x02)
+            self.device.do(self.progmem[a])
+            a += 1
+            self.device.PCH = a >> 8
+            self.device.rw(0x02, a & 0xFF)
