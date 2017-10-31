@@ -30,7 +30,8 @@ class PIC16F1454(Device):
     meminit[0x00A] = '-000 0000'
     meminit[0x00B] = '0000 0000'
 
-    def __init__(self):
+    def __init__(self, progmem):
+        self.progmem = progmem
         self.datamem = [0] * 0x1000
         for i in range(0x1000):
             self.datamem[i] = randrange(0x00, 0x100)
@@ -95,16 +96,15 @@ class PIC16F1454(Device):
 
 
 class Emulator(object):
-    def __init__(self, device, progmem):
+    def __init__(self, device):
         self.device = device
-        self.progmem = progmem
 
     def run(self):
         self.device.por()
 
         while True:
             a = (self.device.PCH << 8) | self.device.rw(0x02)
-            self.device.do(self.progmem[a])
+            self.device.do(self.device.progmem[a])
             a += 1
             self.device.PCH = a >> 8
             self.device.rw(0x02, a & 0xFF)

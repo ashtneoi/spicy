@@ -10,11 +10,12 @@ def test_init():
     print(' '.join('{:02X}'.format(x) for x in d.datamem[0x00:0x0C]))
 
 def test_simple_loop():
-    spicy.Emulator(spicy.PIC16F1454(), (
+    dev = spicy.PIC16F1454((
         # ssXXXXssssXXXX
         0b11000001111110,  # movlw 0x3E
         0b00011011110000,  # xorwf 0x70
         0b11001111111110,  # bra -2 (0x1FE)
-    )).run()
+    ))
+    spicy.Emulator(dev).run()
 
-test_init()
+test_simple_loop()
