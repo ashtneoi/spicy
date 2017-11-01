@@ -1,94 +1,94 @@
 00 0000 0000 ====
-00 0000 0000 0000 - 14 nop
-00 0000 0000 0001 - 14 reset
+00 0000 0000 0000 - 14 nop E
+00 0000 0000 0001 - 14 reset E
 00 0000 0000 001  - x
 00 0000 0000 01   - x
-00 0000 0000 1000 - 14 return
-00 0000 0000 1001 - 14 retfie
-00 0000 0000 1010 - 14 callw
-00 0000 0000 1011 - 14 brw
+00 0000 0000 1000 - 14 return E
+00 0000 0000 1001 - 14 retfie E
+00 0000 0000 1010 - 14 callw E
+00 0000 0000 1011 - 14 brw E
 00 0000 0000 11   - x
 
 00 0000 0001 =
-00 0000 0001 0    - 11 moviw_nm
-00 0000 0001 1    - 11 movwi_nm
+00 0000 0001 0    - 11 moviw_nm NM
+00 0000 0001 1    - 11 movwi_nm NM
 
-00 0000 001       - 9 movlb
+00 0000 001       - 9 movlb K5
 
 00 0000 010       - x
 
 00 0000 0110 ====
 00 0000 0110 000  - x
-00 0000 0110 0010 - 14 option
-00 0000 0110 0011 - 14 sleep
-00 0000 0110 0100 - 14 clrwdt
-00 0000 0110 0101 - 14 tris A
-00 0000 0110 0110 - 14 tris B
-00 0000 0110 0111 - 14 tris C
+00 0000 0110 0010 - 14 option E
+00 0000 0110 0011 - 14 sleep E
+00 0000 0110 0100 - 14 clrwdt E
+00 0000 0110 0101 - 14 trisa E
+00 0000 0110 0110 - 14 trisb E
+00 0000 0110 0111 - 14 trisc E
 00 0000 0110 1    - x
 
-00 0000 1         - 7 movwf
+00 0000 1         - 7 movwf F
 
-00 0001 0         - 12 clrw
+00 0001 0         - 12 clrw X2
 
-00 0001 1         - 7 clrf
+00 0001 1         - 7 clrf F
 
 00 001=
-00 0010           - 6 subwf
-00 0011           - 6 decf
+00 0010           - 6 subwf DF
+00 0011           - 6 decf DF
 
 00 01==
-00 0100           - 6 iorwf
-00 0101           - 6 andwf
-00 0110           - 6 xorwf
-00 0111           - 6 addwf
+00 0100           - 6 iorwf DF
+00 0101           - 6 andwf DF
+00 0110           - 6 xorwf DF
+00 0111           - 6 addwf DF
 
 00 1===
-00 1000           - 6 movf
-00 1001           - 6 comf
-00 1010           - 6 incf
-00 1011           - 6 decfsz
-00 1100           - 6 rrf
-00 1101           - 6 rlf
-00 1110           - 6 swapf
-00 1111           - 6 incfsz
+00 1000           - 6 movf DF
+00 1001           - 6 comf DF
+00 1010           - 6 incf DF
+00 1011           - 6 decfsz DF
+00 1100           - 6 rrf DF
+00 1101           - 6 rlf DF
+00 1110           - 6 swapf DF
+00 1111           - 6 incfsz DF
 
 01 ==
-01 00             - 4 bcf
-01 01             - 4 bsf
-01 10             - 4 btfsc
-01 11             - 4 btfss
+01 00             - 4 bcf BF
+01 01             - 4 bsf BF
+01 10             - 4 btfsc BF
+01 11             - 4 btfss BF
 
 10 =
-10 0              - 3 call
-10 1              - 3 goto
+10 0              - 3 call K11
+10 1              - 3 goto K11
 
-11 0000           - 6 movlw
+11 0000           - 6 movlw K8
 
 11 0001 =
-11 0001 0         - 7 addfsr
-11 0001 1         - 7 movlp
+11 0001 0         - 7 addfsr NK
+11 0001 1         - 7 movlp K7
 
-11 001            - 5 bra
+11 001            - 5 bra K9
 
 11 01==
-11 0100           - 6 retlw
-11 0101           - 6 lslf
-11 0110           - 6 lsrf
-11 0111           - 6 asrf
+11 0100           - 6 retlw K8
+11 0101           - 6 lslf DF
+11 0110           - 6 lsrf DF
+11 0111           - 6 asrf DF
 
 11 10==
-11 1000           - 6 iorlw
-11 1001           - 6 andlw
-11 1010           - 6 xorlw
-11 1011           - 6 subwfb
+11 1000           - 6 iorlw K8
+11 1001           - 6 andlw K8
+11 1010           - 6 xorlw K8
+11 1011           - 6 subwfb DF
 
 11 110=
-11 1100           - 6 sublw
-11 1101           - 6 addwfc
+11 1100           - 6 sublw K8
+11 1101           - 6 addwfc DF
 
-11 1110           - 6 addlw
+11 1110           - 6 addlw K8
 
 11 1111 =
-11 1111 0         - 7 moviw_nk
-11 1111 1         - 7 movwi_nk
+11 1111 0         - 7 moviw_nk NK
+11 1111 1         - 7 movwi_nk NK
