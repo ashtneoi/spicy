@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-import spicy
+import sim
 
 
 def test_init():
