@@ -179,6 +179,17 @@ def disasm_insn(insn):
         raise Exception('Unrecognized format {}'.format(fmt))
 
 
+def disasm_bin(f):
+    while True:
+        b = f.read(2)
+        if len(b) == 0:
+            break
+        elif len(b) == 1:
+            raise Exception("Odd file size")
+        insn = b[0] | (b[1] << 8)
+        print(disasm_insn(insn))
+
+
 def test_opcodes():
     prev = None
     for insn in range(0, 1<<14):
@@ -200,4 +211,9 @@ def test_disasm_insn():
             pass
 
 
-test_disasm_insn()
+def test_disasm_bin():
+    with open('example.bin', 'rb') as f:
+        disasm_bin(f)
+
+
+test_disasm_bin()
