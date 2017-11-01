@@ -124,6 +124,61 @@ def get_opcode(insn):
     return table
 
 
+def twos_comp(x, n):
+    if x >= (1 << (n - 1)):
+        return -((1 << n) - (x & ((1 << n) - 1)))
+    else:
+        return x
+
+
+def disasm_insn(insn):
+    opc, fmt = get_opcode(insn)
+
+    if fmt == 'E' or fmt == 'X2':
+        return opc
+    elif fmt == 'K5':
+        k = insn & ((1 << 5) - 1)
+        return opc + ' 0x{:02X}'.format(k)
+    elif fmt == 'K7' or fmt == 'F':
+        k = insn & ((1 << 7) - 1)
+        return opc + ' 0x{:02X}'.format(k)
+    elif fmt == 'K8':
+        k = insn & ((1 << 8) - 1)
+        return opc + ' 0x{:02X}'.format(k)
+    elif fmt == 'K9':
+        k = twos_comp(insn & ((1 << 9) - 1), 9)
+        return opc + ' {}0x{:03X}'.format('-' if k < 0 else '', abs(k))
+    elif fmt == 'K11':
+        k = insn & ((1 << 11) - 1)
+        return opc + ' 0x{:03X}'.format(k)
+    elif fmt == 'DF':
+        d = (insn & (1 << 7)) >> 7
+        f = insn & ((1 << 7) - 1)
+        return opc + ' 0x{:02X}{}'.format(f, ', W' if d == 1 else '')
+    elif fmt == 'BF':
+        b = (insn & (0b111 << 7)) >> 7
+        f = insn & ((1 << 7) - 1)
+        return opc + ' 0x{:02X}, {}'.format(f, b)
+    elif fmt == 'NM':
+        n = (insn & (1 << 2)) >> 2
+        m = insn & ((1 << 2) - 1)
+        if m == 0:
+            a = '++FSR{}'
+        elif m == 1:
+            a = '--FSR{}'
+        elif m == 2:
+            a = 'FSR{}++'
+        else:
+            a = 'FSR{}--'
+        return opc + ' ' + a.format(n)
+    elif fmt == 'NK':
+        n = (insn & (1 << 6)) >> 6
+        k = twos_comp(insn & ((1 << 6) - 1), 6)
+        return opc + ' {}{}[FSR{}]'.format('-' if k < 0 else '', abs(k), n)
+    else:
+        raise Exception('Unrecognized format {}'.format(fmt))
+
+
 def test_opcodes():
     prev = None
     for insn in range(0, 1<<14):
@@ -135,4 +190,14 @@ def test_opcodes():
         except KeyError:
             pass
 
-test_opcodes()
+
+def test_disasm_insn():
+    prev = None
+    for insn in range(0, 1<<14):
+        try:
+            print(disasm_insn(insn))
+        except KeyError:
+            pass
+
+
+test_disasm_insn()
