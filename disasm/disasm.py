@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 opcodes = (2, {
     0b00: (1, {
         0b0: (1, {  # 00 0
@@ -190,7 +193,7 @@ def disasm_bin(f):
         print(disasm_insn(insn))
 
 
-def test_opcodes():
+def print_all_opcodes():
     prev = None
     for insn in range(0, 1<<14):
         try:
@@ -202,7 +205,7 @@ def test_opcodes():
             pass
 
 
-def test_disasm_insn():
+def print_all_insns():
     prev = None
     for insn in range(0, 1<<14):
         try:
@@ -211,9 +214,11 @@ def test_disasm_insn():
             pass
 
 
-def test_disasm_bin():
-    with open('example.bin', 'rb') as f:
+if __name__ == '__main__':
+    from sys import argv, stderr
+
+    if len(argv) != 2:
+        print("Usage: {} FILENAME".format(argv[0]))
+        exit(1)
+    with open(argv[1], 'rb') as f:
         disasm_bin(f)
-
-
-test_disasm_bin()
