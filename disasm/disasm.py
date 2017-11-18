@@ -189,7 +189,7 @@ def disasm_bin(f):
             break
         elif len(b) == 1:
             raise Exception("Odd file size")
-        insn = b[0] | (b[1] << 8)
+        insn = b[0] | ((b[1] & ((1 << 6) - 1)) << 8)
         print(disasm_insn(insn))
 
 
