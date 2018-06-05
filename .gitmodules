@@ -1,0 +1,3 @@
+[submodule "destroy"]
+	path = destroy
+	url = git@github.com:ashtneoi/destroy.git

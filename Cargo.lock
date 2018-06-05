@@ -1,0 +1,21 @@
+[[package]]
+name = "destroy"
+version = "0.0.1"
+dependencies = [
+ "tree-cursor 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "spicy"
+version = "0.1.0"
+dependencies = [
+ "destroy 0.0.1",
+]
+
+[[package]]
+name = "tree-cursor"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum tree-cursor 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "65df1d6eb2f67a6cc893c49b1d4c1ac3a84eccff3e158e1c4df8f3d979e42dca"
